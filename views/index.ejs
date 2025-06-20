@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Whatsaap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script>
+        function check() { return confirm("are you sure to delte the chat"); }
+    </script>
+    <form method="get" action="/chats/new">
+        <button>Add new!</button>
+    </form>
+    <h3>All Chats</h3>
+    <% for(chat of chats){ %>
+        <div class="chat">
+            <p>From:<i>
+                    <%= chat.from %>
+                </i>
+            </p>
+            <div class="msg">
+                <p>
+                    <%= chat.msg %>
+                        <form method="get" action="/chats/<%= chat._id %>/edit">
+                            <button>Edit</button>
+                        </form>
+                </p>
+            </div>
+            <p>Recived By:<i>
+                    <%= chat.to %>
+                </i>
+            </p>
+            <hr>
+            <p>
+                <%= chat.createdAt.toString().split("").slice(16,25).join("")%>
+            </p>
+            <p>
+                <%= chat.createdAt.toString().split("").slice(0,15).join("")%>
+            </p>
+            <form onsubmit="return check()" method="post" action="/chats/<%=chat._id %>?_method=Delete">
+                <button>Delete Chat</button>
+            </form>
+        </div>
+        <br /><br />
+        <% } %>
+
+</body>
+
+</html>
